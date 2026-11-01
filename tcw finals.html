@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEC 003: The Contemporary World - Interactive Final Exam Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom scrollbar for question navigator grid */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.8);
+        }
+    </style>
+</head>
+<body class="h-full text-slate-100 antialiased flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-800/80 backdrop-blur-md border-b border-slate-700/60 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 p-2 rounded-xl shadow-lg shadow-indigo-500/20">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-white leading-none">The Contemporary World</h1>
+                    <span class="text-xs font-semibold text-indigo-400 tracking-wider uppercase">GEC 003 • Final Exam Studio</span>
+                </div>
+            </div>
+
+            <!-- Header Controls & Live Counters -->
+            <div id="header-stats" class="hidden items-center space-x-4 sm:space-x-6">
+                <!-- Mode Badge -->
+                <span id="mode-badge" class="px-2.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                    Practice Mode
+                </span>
+
+                <!-- Timer -->
+                <div id="timer-box" class="hidden flex items-center space-x-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700/50">
+                    <svg class="w-4 h-4 text-amber-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="timer-display" class="font-mono text-sm font-semibold text-slate-200">120:00</span>
+                </div>
+
+                <!-- Live Score -->
+                <div id="live-score-box" class="flex items-center space-x-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700/50">
+                    <span class="text-xs font-medium text-slate-400">Score:</span>
+                    <span id="live-score-display" class="font-bold text-sm text-indigo-400">0/50</span>
+                </div>
+
+                <!-- End Test Button -->
+                <button onclick="confirmFinishExam()" class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 font-semibold px-3 py-1.5 rounded-lg border border-red-500/20 transition">
+                    Finish Test
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Container -->
+    <main class="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- WELCOME / MODE SELECTION SCREEN -->
+        <div id="screen-welcome" class="max-w-2xl mx-auto w-full bg-slate-800/50 backdrop-blur-md rounded-2xl border border-slate-700/60 p-6 sm:p-10 shadow-2xl">
+            <div class="text-center space-y-4 mb-8">
+                <div class="inline-flex p-3 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V7.865m-8.5-4.93c1.782-.008 3.5.42 5.03 1.205M12 21a9.004 9.004 0 008.354-5.646M12 21a9.003 9.003 0 01-8.354-5.646M12 21a9 9 0 000-18"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-extrabold text-white tracking-tight">Final Exam Reviewer</h2>
+                <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                    Master all 50 questions from the Technologial Institute of the Philippines (TIP) GEC 003 Contemporary World examination with instant feedback, full rationales, and flexible test modes.
+                </p>
+            </div>
+
+            <!-- Mode Options Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <!-- Practice Mode Card -->
+                <div onclick="selectMode('practice')" id="mode-card-practice" class="cursor-pointer border-2 border-indigo-500 bg-indigo-500/10 rounded-xl p-5 transition-all hover:border-indigo-400 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-indigo-400 font-bold text-sm tracking-wide uppercase">Practice Mode</span>
+                            <span class="w-3 h-3 rounded-full bg-indigo-400"></span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Immediate answer validation, step-by-step rationales, no strict timer pressure. Ideal for thorough studying.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-700/50 flex items-center text-xs text-indigo-300 font-medium">
+                        Instant feedback included →
+                    </div>
+                </div>
+
+                <!-- Exam Mode Card -->
+                <div onclick="selectMode('exam')" id="mode-card-exam" class="cursor-pointer border-2 border-slate-700 bg-slate-800/40 rounded-xl p-5 transition-all hover:border-slate-500 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-slate-300 font-bold text-sm tracking-wide uppercase">Exam Simulation</span>
+                            <span class="w-3 h-3 rounded-full bg-slate-600"></span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            120-minute countdown timer, hidden answers until completion, mimics the real Canvas/Instructure exam setting.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-700/50 flex items-center text-xs text-slate-400 font-medium">
+                        Real-world test simulation →
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <button onclick="startExam()" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2">
+                <span>Start Practice Session</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+
+        <!-- QUIZ ACTIVE INTERFACE -->
+        <div id="screen-quiz" class="hidden grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+
+            <!-- Question & Main Content Area (3 Cols) -->
+            <div class="lg:col-span-3 space-y-6">
+
+                <!-- Progress Header -->
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700/60 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3 w-full sm:w-auto">
+                        <span class="text-sm font-semibold text-slate-400">Question <span id="q-number" class="text-indigo-400 font-extrabold text-base">1</span> of 50</span>
+                        <span id="answered-badge" class="text-xs px-2.5 py-0.5 rounded-full bg-slate-700 text-slate-300 font-medium">Unanswered</span>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full sm:w-64 bg-slate-700/60 h-2.5 rounded-full overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full transition-all duration-300 w-[2%]"></div>
+                    </div>
+                </div>
+
+                <!-- Main Question Card -->
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 sm:p-8 shadow-xl relative">
+
+                    <!-- Optional Passage / Scenario Box -->
+                    <div id="passage-container" class="hidden mb-6 p-4 sm:p-5 rounded-xl bg-slate-900/80 border-l-4 border-indigo-500 text-slate-300 text-sm leading-relaxed">
+                        <div class="flex items-center space-x-2 text-indigo-400 font-bold text-xs uppercase tracking-wider mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <span>Reference Text / Situation</span>
+                        </div>
+                        <div id="passage-text"></div>
+                    </div>
+
+                    <!-- Question Prompt -->
+                    <h3 id="question-text" class="text-lg sm:text-xl font-bold text-white leading-snug mb-6">
+                        <!-- Dynamic Question Text -->
+                    </h3>
+
+                    <!-- Choice Options Grid -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Dynamic Options rendered here -->
+                    </div>
+
+                    <!-- Rationale / Feedback Card (Practice Mode Only) -->
+                    <div id="rationale-box" class="hidden mt-6 p-5 rounded-xl border transition-all">
+                        <div class="flex items-center space-x-2 font-bold text-sm mb-2" id="rationale-title">
+                            <!-- Feedback Title -->
+                        </div>
+                        <p id="rationale-text" class="text-sm text-slate-300 leading-relaxed"></p>
+                    </div>
+
+                </div>
+
+                <!-- Navigation Action Buttons -->
+                <div class="flex items-center justify-between pt-2">
+                    <button id="btn-prev" onclick="navigateQuestion(-1)" class="flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span>Previous</span>
+                    </button>
+
+                    <div class="flex items-center space-x-3">
+                        <button id="btn-clear" onclick="clearSelection()" class="text-xs text-slate-400 hover:text-slate-200 underline font-medium">
+                            Clear Selection
+                        </button>
+
+                        <button id="btn-next" onclick="navigateQuestion(1)" class="flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-sm font-semibold transition shadow-lg shadow-indigo-600/20">
+                            <span>Next Question</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Question Navigator Sidebar (1 Col) -->
+            <div class="lg:col-span-1 bg-slate-800/50 backdrop-blur-md border border-slate-700/60 rounded-2xl p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-sm font-bold text-slate-200">Question Palette</h4>
+                    <span id="palette-completion" class="text-xs text-slate-400 font-medium">0/50 done</span>
+                </div>
+
+                <!-- Question Grid 1-50 -->
+                <div id="question-grid" class="grid grid-cols-5 gap-2 max-h-[380px] overflow-y-auto pr-1">
+                    <!-- Dynamic Grid Buttons -->
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-700/60 space-y-2 text-xs">
+                    <div class="flex items-center space-x-2 text-slate-400">
+                        <span class="w-3 h-3 rounded bg-indigo-600"></span>
+                        <span>Current</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-slate-400">
+                        <span class="w-3 h-3 rounded bg-emerald-500/20 border border-emerald-500"></span>
+                        <span>Answered</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-slate-400">
+                        <span class="w-3 h-3 rounded bg-slate-700"></span>
+                        <span>Unanswered</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RESULTS / BREAKDOWN SCREEN -->
+        <div id="screen-results" class="hidden max-w-4xl mx-auto w-full space-y-8">
+            
+            <!-- Summary Header Card -->
+            <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div id="score-icon-container" class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-xl">
+                    🏆
+                </div>
+
+                <h2 class="text-3xl font-extrabold text-white mb-2">Test Performance Report</h2>
+                <p id="performance-message" class="text-slate-400 text-sm max-w-md mx-auto mb-6">
+                    Here is the breakdown of your performance for GEC 003 The Contemporary World practice exam.
+                </p>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
+                    <div class="bg-slate-900/60 border border-slate-700/50 p-4 rounded-xl">
+                        <span class="text-xs text-slate-400 uppercase font-semibold">Total Score</span>
+                        <div class="text-2xl font-extrabold text-indigo-400 mt-1"><span id="res-score">0</span> / 50</div>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-700/50 p-4 rounded-xl">
+                        <span class="text-xs text-slate-400 uppercase font-semibold">Percentage</span>
+                        <div id="res-percentage" class="text-2xl font-extrabold text-emerald-400 mt-1">0%</div>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-700/50 p-4 rounded-xl">
+                        <span class="text-xs text-slate-400 uppercase font-semibold">Correct</span>
+                        <div id="res-correct" class="text-2xl font-extrabold text-emerald-400 mt-1">0</div>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-700/50 p-4 rounded-xl">
+                        <span class="text-xs text-slate-400 uppercase font-semibold">Incorrect</span>
+                        <div id="res-incorrect" class="text-2xl font-extrabold text-rose-400 mt-1">0</div>
+                    </div>
+                </div>
+
+                <!-- Retake Actions -->
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="restartApp()" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition">
+                        Retake Exam
+                    </button>
+                    <button onclick="scrollToReview()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold py-3 px-6 rounded-xl border border-slate-600 transition">
+                        Review All Answers
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Question-by-Question Review List -->
+            <div id="review-section" class="bg-slate-800/50 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 sm:p-8 space-y-6">
+                <h3 class="text-xl font-bold text-white border-b border-slate-700 pb-4">Comprehensive Question Review</h3>
+                <div id="review-list" class="space-y-6">
+                    <!-- Dynamic review cards appended here -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JS Logic Application Engine -->
+    <script>
+        // Full Question Bank Dataset (50 items strictly parsed from the exam PDF source)
+        const questionsData = [
+            {
+                id: 1,
+                passage: null,
+                question: "1. \"Globalization refers to the expansion and intensification of social relations and consciousness across world-time and across world-space.\" Who provided this definition?",
+                options: ["Appadurai", "Ohmae", "Steger", "Ritzer"],
+                answer: 2, // Steger
+                rationale: "Manfred Steger famously defined globalization as the expansion and intensification of social relations and consciousness across world-time and world-space."
+            },
+            {
+                id: 2,
+                passage: null,
+                question: "2. This was inaugurated in 1944 during the United Nations Monetary and Financial Conference to prevent the catastrophes of the early decades of the century from reoccurring and affecting international ties.",
+                options: ["Bretton Woods", "Neoliberalism", "Shock therapy", "Washington Consensus"],
+                answer: 0, // Bretton Woods
+                rationale: "The Bretton Woods conference established the international monetary system, including the World Bank and IMF, to restore post-WWII international economic stability."
+            },
+            {
+                id: 3,
+                passage: null,
+                question: "3. It refers to the decline in economic growth and employment as well as sharp price increase.",
+                options: ["Bankruptcy", "Inflation", "Stagflation", "Stagnation"],
+                answer: 2, // Stagflation
+                rationale: "Stagflation is an economic condition marked by stagnant economic growth, high unemployment, and simultaneous high inflation."
+            },
+            {
+                id: 4,
+                passage: null,
+                question: "4. It refers to an international trade route between European and Chinese traders named after the most profitable product from China.",
+                options: ["Barter System", "Galleon Trade", "Global Trading", "Silk Road"],
+                answer: 3, // Silk Road
+                rationale: "The Silk Road was an ancient network of Eurasian trade routes named after lucrative Chinese silk textiles."
+            },
+            {
+                id: 5,
+                passage: null,
+                question: "5. This global institution is considered to be a major player to economic globalization for it lends money to countries to avoid economic crises.",
+                options: ["IMF", "GATT", "FAO", "WTO"],
+                answer: 0, // IMF
+                rationale: "The International Monetary Fund (IMF) acts as a global lender of last resort to help countries manage short-term balance-of-payment financial crises."
+            },
+            {
+                id: 6,
+                passage: null,
+                question: "6. This global economic crisis is considered to be the worst and longest recession ever experienced by the Western world.",
+                options: ["Great Depression", "Inflation Rate", "Shock Therapy", "Embargo"],
+                answer: 0, // Great Depression
+                rationale: "The Great Depression of the 1930s was the deepest and most severe economic recession in modern industrial Western history."
+            },
+            {
+                id: 7,
+                passage: null,
+                question: "7. Which is NOT dependent by precious metals and whose value is determined by its cost relative to others currencies?",
+                options: ["Fiat Currency", "Paper Money", "Play Money", "Gold Standard"],
+                answer: 0, // Fiat Currency
+                rationale: "Fiat currency is government-issued money that is not backed by physical commodities like gold or silver, floating in value relative to other currencies."
+            },
+            {
+                id: 8,
+                passage: null,
+                question: "8. It refers to a widespread belief among powerful people that the global integration of global market is beneficial for everyone since it spread freedom and democracy across the world.",
+                options: ["Expansion", "Globalism", "Globalization", "Imperialism"],
+                answer: 1, // Globalism
+                rationale: "Globalism is the ideology that advocates for the free flow of goods, services, and market integration as universally beneficial."
+            },
+            {
+                id: 9,
+                passage: null,
+                question: "9. The privatization of government-controlled services like water, power, communications, and transportation can be a better option believing that the free market can produce the best results. This is the advocacy of",
+                options: ["Bretton Woods System", "Global Keynesianism", "International Trading System", "Washington Consensus"],
+                answer: 3, // Washington Consensus
+                rationale: "The Washington Consensus advocates for neoliberal economic policies including deregulation, privatization, and minimal state interference."
+            },
+            {
+                id: 10,
+                passage: null,
+                question: "10. Internationalization does not equal globalization. This statement is true because",
+                options: [
+                    "it is a major part of globalization.",
+                    "it is a minor part of globalization.",
+                    "it talks about domestic problems of one's country.",
+                    "it focuses on economic development."
+                ],
+                answer: 0, // it is a major part of globalization
+                rationale: "Internationalization (cross-border relations between nation-states) is a major aspect/subset of globalization, but globalization is broader, transcending borders altogether."
+            },
+            {
+                id: 11,
+                passage: null,
+                question: "11. It refers to a set of agreements signed in 1648 to end the thirty years' war among the major continental powers of Europe.",
+                options: ["Treaty of Paris", "Treaty of Westphalia", "Treaty of Versailles", "Treaty of Tordesillas"],
+                answer: 1, // Treaty of Westphalia
+                rationale: "The Peace of Westphalia (1648) ended the Thirty Years' War and established the modern international system of sovereign nation-states."
+            },
+            {
+                id: 12,
+                passage: null,
+                question: "12. Who was defeated in Waterloo in 1815 by Anglo and Prussian armies?",
+                options: ["Bonaparte", "Hitler", "Hirohito", "Mussolini"],
+                answer: 0, // Bonaparte
+                rationale: "Napoleon Bonaparte suffered his decisive final defeat at the Battle of Waterloo in 1815."
+            },
+            {
+                id: 13,
+                passage: null,
+                question: "13. It refers to the domination of one culture over another.",
+                options: ["Cultural colonialism", "Cultural imperialism", "Global culture", "Global media"],
+                answer: 1, // Cultural imperialism
+                rationale: "Cultural imperialism refers to the practice of promoting and imposing one culture over another vulnerable culture."
+            },
+            {
+                id: 14,
+                passage: null,
+                question: "14. Some Muslims refer to it as a Trojan horse hiding supporters of Western values like secularism and liberalism. The pronoun \"it\" refers to",
+                options: ["globalization", "imperialism", "media", "religion"],
+                answer: 0, // globalization
+                rationale: "Religious traditionalists often view globalization as a Trojan horse carrying Western secularism and moral decay."
+            },
+            {
+                id: 15,
+                passage: null,
+                question: "15. Two of the so-called \"old world religions\" which see globalization less as an obstacle and more of an opportunity to expand their reach globally.",
+                options: ["Buddhism and Hinduism", "Buddhism and Mormon", "Christianity and Born-again", "Christianity and Islam"],
+                answer: 3, // Christianity and Islam
+                rationale: "Christianity and Islam are global proselytizing religions that actively leverage global networks to expand worldwide."
+            },
+            {
+                id: 16,
+                passage: null,
+                question: "16. Which among the following is NOT included as perils of overpopulation?",
+                options: ["extreme poverty", "air, water and land pollution", "food scarcity", "economic prosperity"],
+                answer: 3, // economic prosperity
+                rationale: "Economic prosperity is a positive societal condition, whereas poverty, pollution, and food scarcity are perils."
+            },
+            {
+                id: 17,
+                passage: null,
+                question: "17. This organization warns that in order for countries to mitigate the impact of population growth, food production must increase by 70 percent.",
+                options: ["Food and Agriculture Organization", "United Nations", "International Labor Organization", "World Health Organization"],
+                answer: 0, // Food and Agriculture Organization (FAO)
+                rationale: "The FAO (Food and Agriculture Organization) specifically issued reports stating global food production must rise by 70% to feed future populations."
+            },
+            {
+                id: 18,
+                passage: null,
+                question: "18. Which among the following is NOT a global city according to sociologist Saskia Sassen?",
+                options: ["London", "New York", "Bangkok", "Tokyo"],
+                answer: 2, // Bangkok
+                rationale: "Saskia Sassen identified New York, London, and Tokyo as the primary archetype global command cities."
+            },
+            {
+                id: 19,
+                passage: null,
+                question: "19. Which of the following is the foremost characteristic of global cities according to sociologist Saskia Sassen?",
+                options: ["Center of global power", "Densely populated city", "Presence of buildings and skyscrapers", "Economic power"],
+                answer: 3, // Economic power
+                rationale: "According to Sassen, economic power and financial command function serve as the defining traits of global cities."
+            },
+            {
+                id: 20,
+                passage: null,
+                question: "20. Which of the following terms pertains to a complex discipline that requires the integration of various social scientific data?",
+                options: ["Astronomy", "Demography", "Geography", "Philosophy"],
+                answer: 1, // Demography
+                rationale: "Demography is the interdisciplinary statistical study of human populations across rates, structures, and socio-economic trends."
+            },
+            {
+                id: 21,
+                passage: null,
+                question: "21. Which of the following is NOT included as a key attribute of global system?",
+                options: [
+                    "Countries in the global system interact with each other through diplomacy.",
+                    "There are countries that are independent and govern themselves.",
+                    "A state has a structure of government that designs various rules that people follow.",
+                    "Beyond simply facilitating meetings between states, international organizations also take on lives of their own."
+                ],
+                answer: 3, // Beyond simply facilitating meetings...
+                rationale: "While IOs exist, the standard basic attributes of international relations focus on sovereign states, independent governance, and state interactions."
+            },
+            {
+                id: 22,
+                passage: null,
+                question: "22. Which among the following statements is appropriate to say about galleon trade?",
+                options: [
+                    "The galleon trade was an ordinary event.",
+                    "Galleon trade and mercantilism are synonymous.",
+                    "Mercantilism started only during the galleon trade.",
+                    "The galleon trade was part of the age of mercantilism."
+                ],
+                answer: 3, // The galleon trade was part of the age of mercantilism.
+                rationale: "The Manila-Acapulco Galleon Trade operated directly under Spanish mercantilist economic policies."
+            },
+            {
+                id: 23,
+                passage: null,
+                question: "23. What do advocates of Washington Consensus push for?",
+                options: [
+                    "They pushed for minimal government officials' trips abroad.",
+                    "They pushed for more financial resources to boost economic stability.",
+                    "They pushed for minimal government spending to reduce government debt.",
+                    "They aren't pushing anything because they themselves aren't motivated."
+                ],
+                answer: 2, // Minimal government spending to reduce debt
+                rationale: "A core pillar of the Washington Consensus is fiscal austerity—reducing government debt by spending less."
+            },
+            {
+                id: 24,
+                passage: null,
+                question: "24. Which among the following is the basic idea of global Keynesianism?",
+                options: [
+                    "It is a system in which money is circulated in the economy.",
+                    "It refers to the active role of the government in managing spending.",
+                    "It refers to the active participation of the business people in the government.",
+                    "It is a system in which government lent money from other international organizations."
+                ],
+                answer: 1, // Active role of government managing spending
+                rationale: "Keynesianism posits that state intervention and public spending management are essential to maintain macroeconomic health."
+            },
+            {
+                id: 25,
+                passage: null,
+                question: "25. Gold standard as adopted by the United Sates and other European nations refers to",
+                options: [
+                    "states in search for gold worldwide.",
+                    "nations working together to accumulate more gold reserve.",
+                    "economies establishing common business perceptions-all based on gold standard.",
+                    "countries establishing common basis for currency prices- all based on the value of gold."
+                ],
+                answer: 3, // countries establishing common basis for currency prices...
+                rationale: "The Gold Standard fixed paper currencies to a specific quantity of gold, standardizing international currency valuation."
+            },
+            {
+                id: 26,
+                passage: null,
+                question: "26. Which among the following is NOT an attribute of world politics?",
+                options: [
+                    "Countries interact with each other.",
+                    "There are international organizations.",
+                    "Countries/ States are independent.",
+                    "Countries should be divided and conquer other states."
+                ],
+                answer: 3, // Divide and conquer
+                rationale: "Divide and conquer is a political tactic, not an structural attribute of the international state system."
+            },
+            {
+                id: 27,
+                passage: null,
+                question: "27. Which among the following is the specific function of the United Nations' General Assembly?",
+                options: [
+                    "It is responsible for conflict resolution and legal disputes.",
+                    "It is the deliberative policymaking and representative organ.",
+                    "It designs poverty and reduction program.",
+                    "It monitors the duties and responsibilities of the UN staff."
+                ],
+                answer: 1, // Deliberative policymaking organ
+                rationale: "The UN General Assembly serves as the main deliberative, policy-making, and representative organ of the United Nations."
+            },
+            {
+                id: 28,
+                passage: null,
+                question: "28. Which one of the organs of UN has five permanent members and considered as the most powerful organization?",
+                options: [
+                    "Economic and Social Council",
+                    "General Assembly",
+                    "International Court of Justice",
+                    "Security Council"
+                ],
+                answer: 3, // Security Council
+                rationale: "The Security Council holds primary power over peace and security enforcement and includes 5 permanent veto-bearing members (P5)."
+            },
+            {
+                id: 29,
+                passage: null,
+                question: "29. What is the main function of the United Nations?",
+                options: [
+                    "To support its member-countries financially",
+                    "To seek sentiments from the member-states",
+                    "To avert global war after World War II",
+                    "To isolate non-member countries from the UN"
+                ],
+                answer: 2, // To avert global war after World War II
+                rationale: "The UN was founded in 1945 primarily to maintain international peace and prevent another catastrophic global war."
+            },
+            {
+                id: 30,
+                passage: null,
+                question: "30. Which of the following statements best supports that media and globalization has an intimate relationship?",
+                options: [
+                    "Globalization involves the spread of ideas.",
+                    "Media entails the spread of various cultures.",
+                    "Globalization is a means of conveying something such as the channel of communication.",
+                    "Media relies on globalization as its main conduit for the spread of global culture and ideas."
+                ],
+                answer: 3, // Media relies on globalization...
+                rationale: "Media and globalization are mutually dependent; global technology networks allow media content to permeate internationally."
+            },
+            {
+                id: 31,
+                passage: null,
+                question: "31. What was Napoleon Bonaparte's reason for declaring war against European countries?",
+                options: [
+                    "He wanted to conquer all European countries.",
+                    "He wanted to challenge the monarchial rule in Europe.",
+                    "He aimed to spread liberty, equality and fraternity which were the principles of French Revolution.",
+                    "He desired to spread Protestantism among countries."
+                ],
+                answer: 2, // He aimed to spread liberty, equality, fraternity...
+                rationale: "Napoleon sought to spread the Napoleonic Code and revolutionary principles (Liberty, Equality, Fraternity) across aristocratic monarchies."
+            },
+            {
+                id: 32,
+                passage: null,
+                question: "32. Which of the following explains why Singapore is considered Asia's most competitive city?",
+                options: [
+                    "It houses big cinemas and theaters.",
+                    "It has a strong market, efficient and incorruptible government, and livability.",
+                    "It is easier to watch the movie of a Filipino indie filmmaker in Singapore.",
+                    "It houses regional offices and many international organizations."
+                ],
+                answer: 1, // Strong market, efficient/incorruptible gov, livability
+                rationale: "Singapore's competitiveness rests on market efficiency, low corruption, high livability, and strong rule of law."
+            },
+            {
+                id: 33,
+                passage: null,
+                question: "33. Which among the following is NOT a criterion to measure the economic competitiveness of a city according to Economist Intelligence Unit?",
+                options: ["Market size", "Potential for growth", "Purchasing power of citizens", "Number of immigrants"],
+                answer: 3, // Number of immigrants
+                rationale: "The raw count of immigrants is not an official scoring parameter for the EIU's urban economic competitiveness index."
+            },
+            {
+                id: 34,
+                passage: null,
+                question: "34. Which of the following reasons best explains why cities like Washington DC, Jakarta and Brussels are considered global?",
+                options: [
+                    "They are centers of authority.",
+                    "They are interesting places to live in.",
+                    "They are centers of higher learning and culture.",
+                    "They are home to the most powerful internet companies."
+                ],
+                answer: 0, // Centers of authority
+                rationale: "Washington D.C. (US capital), Jakarta (ASEAN HQ), and Brussels (EU HQ) are global cities because they are seat of political authority."
+            },
+            {
+                id: 35,
+                passage: null,
+                question: "35. What characteristic is common among the cities of Boston, Los Angeles, and Copenhagen?",
+                options: [
+                    "They are centers of authority.",
+                    "They are interesting places to live in.",
+                    "They are centers of higher learning and culture.",
+                    "They are home to most powerful internet companies."
+                ],
+                answer: 2, // Centers of higher learning and culture
+                rationale: "Boston (Harvard/MIT), Los Angeles (Hollywood/Arts), and Copenhagen are celebrated as regional intellectual and cultural hubs."
+            },
+            {
+                id: 36,
+                passage: null,
+                question: "36. Which of the following are factors for urban population growth?\nI. Families are giving birth to more children.\nII. There is a significant increase in the migration of people.\nIII. Great influence of media and religion.",
+                options: ["I only", "I and II only", "II and III only", "I, II and III"],
+                answer: 1, // I and II only
+                rationale: "Urbanization is driven by natural birth rate increase (I) and rural-to-urban population migration (II)."
+            },
+            {
+                id: 37,
+                passage: null,
+                question: "37. Which of the following ideas support the thesis: Religion and Globalism are entirely contrasting belief systems?",
+                options: [
+                    "Religion is concerned with the sacred, while globalism places value on material wealth.",
+                    "Religion regards identities associated with globalism as inferior and narrow.",
+                    "Religious evangelization is in itself a form of globalization.",
+                    "Religious people are less concerned with wealth."
+                ],
+                answer: 0, // Sacred vs material wealth
+                rationale: "Religion prioritizes spiritual/sacred realm, while globalism emphasizes market growth, economic values, and material accumulation."
+            },
+            {
+                id: 38,
+                passage: null,
+                question: "38. Who are described as people who are less worried about whether they will end up in heaven or hell?",
+                options: ["Christians", "Globalists", "Muslim", "Religious"],
+                answer: 1, // Globalists
+                rationale: "Globalists focus on human achievement, market integration, and secular metrics rather than afterlife theology."
+            },
+            {
+                id: 39,
+                passage: null,
+                question: "39. This refers to the actual reproductive performance of an individual, a couple, a group, or a population.",
+                options: ["Birth rate", "Fertility", "Mortality Rate", "Natality"],
+                answer: 1, // Fertility
+                rationale: "Demographically, fertility refers to the actual physical output of live offspring produced by individuals or populations."
+            },
+            {
+                id: 40,
+                passage: null,
+                question: "40. How many people are currently living outside the countries of their birth according to demographers?",
+                options: ["247 million", "347 million", "447 million", "547 million"],
+                answer: 0, // 247 million
+                rationale: "UN demography figures cited in textbook reviews state around 247 million global migrants live outside birth countries."
+            },
+            {
+                id: 41,
+                passage: null,
+                question: "41. Nancy believes that there is only one God. In addition, she is actively participating in church activities and even watch gospel programs on television. What do you think have been the effects to this situation?",
+                options: [
+                    "Effects of religion on globalization",
+                    "Effects of social media on Christianity",
+                    "Effects of different beliefs of people",
+                    "Effects of globalization on religion"
+                ],
+                answer: 3, // Effects of globalization on religion
+                rationale: "Globalization provides technological channels (broadcasting, media networks) that transform religious engagement."
+            },
+            {
+                id: 42,
+                passage: null,
+                question: "42. Donato is hired by the Philippine Statistics Authority. His job is to check and analyze demographic data for predicting future trends. How important is demographic data to one's community?",
+                options: [
+                    "It is not important at all. It is just a record.",
+                    "It is somewhat important because it is for the old people.",
+                    "It is important for it serves as guide for policy makers in meeting the needs of various sectors.",
+                    "It is very important for the formulation, implementation, and evaluation of plans, policies and programs for education, housing, health, and other social services."
+                ],
+                answer: 3, // Very important for formulation/impl/eval of plans...
+                rationale: "Demographic trends provide essential baseline data required for effective long-term public infrastructure and social service planning."
+            },
+            {
+                id: 43,
+                passage: null,
+                question: "43. Ernie, a college student, rents a studio apartment. He cannot afford a television and lives on cheap groceries like dried beans and ramen noodles. Since he does not have a regular job, he does not own a car. Ernie is living in -",
+                options: ["global citizenship", "global food security", "population education", "subjective poverty"],
+                answer: 3, // Subjective poverty
+                rationale: "Subjective poverty occurs when individuals perceive their standard of living or assets to be inadequate compared to societal benchmarks."
+            },
+            {
+                id: 44,
+                passage: null,
+                question: "44. In an American town, a mining company owns all the stores and most of the houses. They sell goods to the workers at inflated prices, offer house rentals for twice what a mortgage would be, and make sure to always pay the workers less than needed to cover food and rent. Once the workers are in debt, they have no choice but to continue working for the company, since their skills are not suitable for a new position. This most closely resembles -",
+                options: ["debt slavery", "global citizenship", "global food security", "population education"],
+                answer: 0, // Debt slavery
+                rationale: "Debt slavery (or debt bondage) occurs when individuals are forced into a cycle of perpetual debt repayment through labor with no means of escape."
+            },
+            {
+                id: 45,
+                passage: "Rapid population growth is a fundamental concern of contemporary society, particularly in developing countries. One of the immediate results of rapid population growth in a country is the explosive growth of the school-age population. This often militates against improvement of the quality education. To facilitate population awareness among national populations from an early age, many governments introduce population education into school syllabuses. -Excerpt abstract from Education and Population Awareness",
+                question: "45. What does the paragraph tell us about rapid population growth?",
+                options: [
+                    "It has no drastic comment about rapid population growth.",
+                    "It has positive impact among its constituents especially the school-age population.",
+                    "It tells about the effects to quality education especially among school-age population.",
+                    "It says rapid population growth help improve lives especially in the developing countries."
+                ],
+                answer: 2, // Effects to quality education...
+                rationale: "The passage directly links rapid population growth to strain on educational infrastructure and quality for school-age youth."
+            },
+            {
+                id: 46,
+                passage: "Rapid population growth is a fundamental concern of contemporary society, particularly in developing countries. One of the immediate results of rapid population growth in a country is the explosive growth of the school-age population. This often militates against improvement of the quality education. To facilitate population awareness among national populations from an early age, many governments introduce population education into school syllabuses. -Excerpt abstract from Education and Population Awareness",
+                question: "46. What does the phrase \"explosive growth of school-age population\" mean in the paragraph?",
+                options: [
+                    "It refers to the increasing number of school-age children.",
+                    "It means more children become interested in attending school.",
+                    "It tells that school-age children are suffering from poor quality education.",
+                    "It only implies that school-age children are still innocent about rapid population growth."
+                ],
+                answer: 0, // Increasing number of school-age children
+                rationale: "\"Explosive growth\" in this demography context literally denotes a rapid surge in the numerical count of children needing schooling."
+            },
+            {
+                id: 47,
+                passage: "Let me begin by sharing to you two of my friends. My first friend loves to eat. His favorite food is McDonald's fried chicken and he always craves for that crispy and juicy fried chicken with lots of gravy. He really likes McDonald's that he even looks like Ronald. Then my other friend is more into music. He spends a lot of time listening music in her iPod and her favorite singer is no less than Justin Bieber; she really loves that she would even scream each time he appears on T.V.\n\nThis process has affected the way we communicate, we think we eat, we dress and we live our lives. In short, globalization has transformed our culture, our Filipino culture. Globalization has become one of the most popular buzzword used by different people worldwide. Globalization affects not only the economy of the country but also the culture of the people who are exposed to global entertainment as well as the foreign foods introduced across the globe. McDonaldization or perhaps Americanization of world culture and United States dominates the world affairs. Is globalization good or bad? For others who benefit from it, globalization is good, for some who experience the disadvantage is bad.",
+                question: "47. What does the passage imply about globalization and the Philippines?",
+                options: [
+                    "Filipinos love Americans.",
+                    "Filipinos are mentally colonized.",
+                    "The effect of globalization on Philippine culture.",
+                    "Filipinos prefer McDonalds rather than Jollibee."
+                ],
+                answer: 2, // Effect of globalization on Philippine culture
+                rationale: "The text explicitly states: \"In short, globalization has transformed our culture, our Filipino culture.\""
+            },
+            {
+                id: 48,
+                passage: "Let me begin by sharing to you two of my friends. My first friend loves to eat. His favorite food is McDonald's fried chicken... [Same passage as Q47]",
+                question: "48. How did Americanization affect people across the globe?",
+                options: ["through food", "through music", "through language", "through world affairs"],
+                answer: 0, // through food
+                rationale: "The passage uses McDonaldization and American food preference illustrations to show cultural assimilation."
+            },
+            {
+                id: 49,
+                passage: "Let me begin by sharing to you two of my friends... Is globalization good or bad? For others who benefit from it, globalization is good, for some who experience the disadvantage is bad. [Same passage as Q47]",
+                question: "49. Globalization has its good and bad effect. Which of the following statements supports the concept?",
+                options: [
+                    "There are nations that do not support world affairs.",
+                    "First world countries have an advantage, and third world countries experience more disadvantage.",
+                    "There is inequality of supply: rich countries buy more, whereas, poor ones are satisfied with what they have.",
+                    "Different nations have different political and cultural system, however, there's a need for each nation to exchange trade in order to survive."
+                ],
+                answer: 1, // First world vs third world disparities
+                rationale: "Globalization yields uneven rewards—benefiting wealthy developed nations while compounding systemic vulnerabilities in developing ones."
+            },
+            {
+                id: 50,
+                passage: "The opportunities our fast-changing \"globalized\" world offers young people are enormous, but so too the challenges. Young people are entitled to an education that equips them with the knowledge, skills and values they need in order to embrace the opportunities and challenges they encounter, and to create the kind of world that they want to live in an education that supports their development as Global Citizens. -Excerpt from Ideas for global citizenship",
+                question: "50. What does the clause \"But so too the challenges\" mean in the paragraph?",
+                options: [
+                    "Young people have been challenged to study hard.",
+                    "The challenges can be a part of young people's journey in life.",
+                    "Young people should remember that life has full of challenges.",
+                    "The challenges offered to young people are as enormous as the opportunities."
+                ],
+                answer: 3, // Challenges offered are as enormous as opportunities
+                rationale: "\"Enormous, but so too the challenges\" means the scale of obstacles matches the massive size of the opportunities."
+            }
+        ];
+
+        // State Variables
+        let currentMode = 'practice'; // 'practice' or 'exam'
+        let currentQuestionIdx = 0;
+        let userAnswers = new Array(50).fill(null);
+        let timerInterval = null;
+        let timeRemainingSeconds = 120 * 60; // 120 Minutes
+
+        // DOM Element Cache
+        const screenWelcome = document.getElementById('screen-welcome');
+        const screenQuiz = document.getElementById('screen-quiz');
+        const screenResults = document.getElementById('screen-results');
+        const headerStats = document.getElementById('header-stats');
+        const timerBox = document.getElementById('timer-box');
+        const timerDisplay = document.getElementById('timer-display');
+        const liveScoreDisplay = document.getElementById('live-score-display');
+        const modeBadge = document.getElementById('mode-badge');
+
+        const qNumber = document.getElementById('q-number');
+        const answeredBadge = document.getElementById('answered-badge');
+        const progressBar = document.getElementById('quiz-progress-bar');
+        const questionText = document.getElementById('question-text');
+        const passageContainer = document.getElementById('passage-container');
+        const passageText = document.getElementById('passage-text');
+        const optionsContainer = document.getElementById('options-container');
+        const rationaleBox = document.getElementById('rationale-box');
+        const rationaleTitle = document.getElementById('rationale-title');
+        const rationaleText = document.getElementById('rationale-text');
+        const questionGrid = document.getElementById('question-grid');
+        const paletteCompletion = document.getElementById('palette-completion');
+
+        // Initial setup on Window Load
+        window.onload = function() {
+            renderQuestionPalette();
+        };
+
+        // Select Mode Card in Welcome Screen
+        function selectMode(mode) {
+            currentMode = mode;
+            const practiceCard = document.getElementById('mode-card-practice');
+            const examCard = document.getElementById('mode-card-exam');
+
+            if (mode === 'practice') {
+                practiceCard.className = "cursor-pointer border-2 border-indigo-500 bg-indigo-500/10 rounded-xl p-5 transition-all hover:border-indigo-400 flex flex-col justify-between";
+                examCard.className = "cursor-pointer border-2 border-slate-700 bg-slate-800/40 rounded-xl p-5 transition-all hover:border-slate-500 flex flex-col justify-between";
+                practiceCard.querySelector('.w-3').className = "w-3 h-3 rounded-full bg-indigo-400";
+                examCard.querySelector('.w-3').className = "w-3 h-3 rounded-full bg-slate-600";
+            } else {
+                examCard.className = "cursor-pointer border-2 border-indigo-500 bg-indigo-500/10 rounded-xl p-5 transition-all hover:border-indigo-400 flex flex-col justify-between";
+                practiceCard.className = "cursor-pointer border-2 border-slate-700 bg-slate-800/40 rounded-xl p-5 transition-all hover:border-slate-500 flex flex-col justify-between";
+                examCard.querySelector('.w-3').className = "w-3 h-3 rounded-full bg-indigo-400";
+                practiceCard.querySelector('.w-3').className = "w-3 h-3 rounded-full bg-slate-600";
+            }
+        }
+
+        // Start Quiz Action
+        function startExam() {
+            screenWelcome.classList.add('hidden');
+            screenQuiz.classList.remove('hidden');
+            headerStats.classList.remove('hidden');
+            headerStats.classList.add('flex');
+
+            if (currentMode === 'exam') {
+                modeBadge.innerText = 'Exam Mode';
+                modeBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20';
+                timerBox.classList.remove('hidden');
+                timerBox.classList.add('flex');
+                startTimer();
+            } else {
+                modeBadge.innerText = 'Practice Mode';
+                modeBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
+                timerBox.classList.add('hidden');
+            }
+
+            currentQuestionIdx = 0;
+            loadQuestion(currentQuestionIdx);
+            updateStats();
+        }
+
+        // Timer Logic
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeRemainingSeconds--;
+                if (timeRemainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up! Submitting your exam automatically.");
+                    finishExam();
+                }
+                const mins = Math.floor(timeRemainingSeconds / 60);
+                const secs = timeRemainingSeconds % 60;
+                timerDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Render Question Item
+        function loadQuestion(idx) {
+            currentQuestionIdx = idx;
+            const qData = questionsData[idx];
+
+            // Question Header
+            qNumber.innerText = idx + 1;
+            progressBar.style.width = `${((idx + 1) / 50) * 100}%`;
+
+            // Answer status badge
+            if (userAnswers[idx] !== null) {
+                answeredBadge.innerText = "Answered";
+                answeredBadge.className = "text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold";
+            } else {
+                answeredBadge.innerText = "Unanswered";
+                answeredBadge.className = "text-xs px-2.5 py-0.5 rounded-full bg-slate-700 text-slate-300 font-medium";
+            }
+
+            // Passage
+            if (qData.passage) {
+                passageContainer.classList.remove('hidden');
+                passageText.innerText = qData.passage;
+            } else {
+                passageContainer.classList.add('hidden');
+            }
+
+            // Question Text
+            questionText.innerText = qData.question;
+
+            // Render Options
+            optionsContainer.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+
+            qData.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.onclick = () => selectAnswer(optIdx);
+
+                let btnStyles = "w-full text-left p-4 rounded-xl border transition-all flex items-start space-x-3 text-sm font-medium ";
+
+                const isSelected = userAnswers[idx] === optIdx;
+                const isCorrect = qData.answer === optIdx;
+
+                if (currentMode === 'practice' && userAnswers[idx] !== null) {
+                    // Practice Mode Feedback Styling
+                    if (isCorrect) {
+                        btnStyles += "bg-emerald-500/10 border-emerald-500 text-emerald-300 shadow-md";
+                    } else if (isSelected && !isCorrect) {
+                        btnStyles += "bg-rose-500/10 border-rose-500 text-rose-300";
+                    } else {
+                        btnStyles += "bg-slate-900/40 border-slate-700/60 text-slate-400 opacity-60";
+                    }
+                } else {
+                    // Standard / Exam Selection Styling
+                    if (isSelected) {
+                        btnStyles += "bg-indigo-600/20 border-indigo-500 text-white shadow-lg ring-1 ring-indigo-500";
+                    } else {
+                        btnStyles += "bg-slate-900/40 border-slate-700/60 hover:bg-slate-700/40 hover:border-slate-600 text-slate-200";
+                    }
+                }
+
+                btn.className = btnStyles;
+
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-400 flex-shrink-0 mt-0.5">${labels[optIdx]}</span>
+                    <span class="flex-grow">${optText}</span>
+                `;
+
+                optionsContainer.appendChild(btn);
+            });
+
+            // Practice Rationale Display
+            if (currentMode === 'practice' && userAnswers[idx] !== null) {
+                rationaleBox.classList.remove('hidden');
+                const isCorrect = userAnswers[idx] === qData.answer;
+
+                if (isCorrect) {
+                    rationaleBox.className = "mt-6 p-5 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-200";
+                    rationaleTitle.innerHTML = `<svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> <span>Correct Answer!</span>`;
+                } else {
+                    rationaleBox.className = "mt-6 p-5 rounded-xl border bg-rose-500/10 border-rose-500/30 text-rose-200";
+                    rationaleTitle.innerHTML = `<svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> <span>Incorrect</span>`;
+                }
+                rationaleText.innerText = qData.rationale;
+            } else {
+                rationaleBox.classList.add('hidden');
+            }
+
+            // Disable Previous on Q1
+            document.getElementById('btn-prev').disabled = idx === 0;
+            
+            // Next Button Text adjustment on final question
+            const btnNext = document.getElementById('btn-next');
+            if (idx === 49) {
+                btnNext.querySelector('span').innerText = "Finish Exam";
+            } else {
+                btnNext.querySelector('span').innerText = "Next Question";
+            }
+
+            renderQuestionPalette();
+        }
+
+        // Selection Handler
+        function selectAnswer(optIdx) {
+            userAnswers[currentQuestionIdx] = optIdx;
+            loadQuestion(currentQuestionIdx);
+            updateStats();
+        }
+
+        // Clear Selection
+        function clearSelection() {
+            userAnswers[currentQuestionIdx] = null;
+            loadQuestion(currentQuestionIdx);
+            updateStats();
+        }
+
+        // Next / Prev Actions
+        function navigateQuestion(step) {
+            const nextIdx = currentQuestionIdx + step;
+            if (nextIdx >= 0 && nextIdx < 50) {
+                loadQuestion(nextIdx);
+            } else if (nextIdx === 50) {
+                confirmFinishExam();
+            }
+        }
+
+        // Question Palette Grid
+        function renderQuestionPalette() {
+            questionGrid.innerHTML = '';
+            let answeredCount = 0;
+
+            for (let i = 0; i < 50; i++) {
+                const btn = document.createElement('button');
+                btn.onclick = () => loadQuestion(i);
+
+                let gridStyles = "h-9 rounded-lg text-xs font-bold transition flex items-center justify-center ";
+
+                if (userAnswers[i] !== null) {
+                    answeredCount++;
+                }
+
+                if (i === currentQuestionIdx) {
+                    gridStyles += "bg-indigo-600 text-white ring-2 ring-indigo-400";
+                } else if (userAnswers[i] !== null) {
+                    gridStyles += "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+                } else {
+                    gridStyles += "bg-slate-900/60 text-slate-400 border border-slate-700/50 hover:bg-slate-700";
+                }
+
+                btn.className = gridStyles;
+                btn.innerText = i + 1;
+                questionGrid.appendChild(btn);
+            }
+
+            paletteCompletion.innerText = `${answeredCount}/50 answered`;
+        }
+
+        // Stats Calculator
+        function updateStats() {
+            let score = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === questionsData[idx].answer) {
+                    score++;
+                }
+            });
+            liveScoreDisplay.innerText = `${score}/50`;
+        }
+
+        // Confirm finish modal prompt
+        function confirmFinishExam() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            let msg = "Are you sure you want to complete and finish the exam?";
+            if (unanswered > 0) {
+                msg = `You still have ${unanswered} unanswered question(s). Are you sure you want to finish now?`;
+            }
+
+            if (confirm(msg)) {
+                finishExam();
+            }
+        }
+
+        // Finish Exam & Generate Detailed Scorecard
+        function finishExam() {
+            clearInterval(timerInterval);
+
+            screenQuiz.classList.add('hidden');
+            headerStats.classList.add('hidden');
+            screenResults.classList.remove('hidden');
+
+            let correctCount = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === questionsData[idx].answer) {
+                    correctCount++;
+                }
+            });
+
+            const incorrectCount = 50 - correctCount;
+            const percentage = Math.round((correctCount / 50) * 100);
+
+            // Populate Stats
+            document.getElementById('res-score').innerText = correctCount;
+            document.getElementById('res-percentage').innerText = `${percentage}%`;
+            document.getElementById('res-correct').innerText = correctCount;
+            document.getElementById('res-incorrect').innerText = incorrectCount;
+
+            // Score Banner Messaging
+            const iconBox = document.getElementById('score-icon-container');
+            const msgBox = document.getElementById('performance-message');
+
+            if (percentage >= 90) {
+                iconBox.innerText = "🏆";
+                iconBox.className = "w-20 h-20 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-3xl font-bold mb-4 shadow-xl text-emerald-400";
+                msgBox.innerText = "Outstanding Mastery! You demonstrated exceptional knowledge of The Contemporary World concepts.";
+            } else if (percentage >= 75) {
+                iconBox.innerText = "🎉";
+                iconBox.className = "w-20 h-20 mx-auto rounded-full bg-indigo-500/20 border border-indigo-500/50 flex items-center justify-center text-3xl font-bold mb-4 shadow-xl text-indigo-400";
+                msgBox.innerText = "Great Job! You passed the exam review with a solid score.";
+            } else {
+                iconBox.innerText = "📚";
+                iconBox.className = "w-20 h-20 mx-auto rounded-full bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-3xl font-bold mb-4 shadow-xl text-amber-400";
+                msgBox.innerText = "Keep Reviewing! Take time to review the rationales below and try again to improve your score.";
+            }
+
+            // Render Detailed Review List
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+
+            questionsData.forEach((qData, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === qData.answer;
+
+                const card = document.createElement('div');
+                card.className = `p-5 rounded-xl border ${isCorrect ? 'bg-slate-900/40 border-slate-700/60' : 'bg-rose-500/5 border-rose-500/30'}`;
+
+                let optionsHtml = '';
+                qData.options.forEach((optText, optIdx) => {
+                    let optStyle = "text-xs p-2.5 rounded-lg border flex items-center space-x-2 ";
+                    if (optIdx === qData.answer) {
+                        optStyle += "bg-emerald-500/20 border-emerald-500/50 text-emerald-300 font-bold";
+                    } else if (optIdx === userAns && !isCorrect) {
+                        optStyle += "bg-rose-500/20 border-rose-500/50 text-rose-300 font-bold";
+                    } else {
+                        optStyle += "bg-slate-800/40 border-slate-700/40 text-slate-400";
+                    }
+
+                    optionsHtml += `
+                        <div class="${optStyle}">
+                            <span class="font-mono font-bold">${labels[optIdx]}.</span>
+                            <span>${optText}</span>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Question ${idx + 1}</span>
+                        <span class="text-xs px-2.5 py-0.5 rounded-full font-bold ${isCorrect ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">
+                            ${isCorrect ? 'Correct' : 'Incorrect'}
+                        </span>
+                    </div>
+                    <p class="text-sm font-bold text-white mb-3">${qData.question}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                        ${optionsHtml}
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3 rounded-lg text-slate-300 border border-slate-800 leading-relaxed">
+                        <strong class="text-indigo-400">Rationale:</strong> ${qData.rationale}
+                    </div>
+                `;
+
+                reviewList.appendChild(card);
+            });
+        }
+
+        // Scroll Helper
+        function scrollToReview() {
+            document.getElementById('review-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Restart Application State
+        function restartApp() {
+            userAnswers = new Array(50).fill(null);
+            timeRemainingSeconds = 120 * 60;
+            currentQuestionIdx = 0;
+            screenResults.classList.add('hidden');
+            screenWelcome.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
+
